@@ -1,32 +1,49 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <Header/>
+    <v-main>
+      <v-container class="px-4 py-0 fill-height" fluid>
+        <v-row class="fill-height">
+          <v-col>
+            <transition name="fade">
+              <router-view></router-view>
+            </transition>
+          </v-col>
+        </v-row>
+      </v-container>
+
+    </v-main>
+    <Footer />
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Header from './components/dashboard/core/Header.vue';
+import Footer from './components/dashboard/core/Footer.vue';
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  components: {
+    Header,
+    Footer,
+  },
+  created() {
+    // Checks if auth token is valid or has expired
+    this.$http.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          if (this.$store.getters.isLoggedIn) {
+            this.$store.dispatch('refreshToken');
+          } else {
+            return Promise.reject(error);
+          }
+        } else {
+          return Promise.reject(error);
+        }
+        return null;
+      },
+    );
+  },
+};
+</script>
