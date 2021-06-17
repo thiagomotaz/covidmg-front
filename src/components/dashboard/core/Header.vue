@@ -14,7 +14,7 @@
         </template>
 
         <v-list>
-          <v-list-item link>
+          <v-list-item link :to="{ name: 'Profile'}">
             <v-list-item-title>Meu perfil</v-list-item-title>
           </v-list-item>
           <v-list-item link>
@@ -58,7 +58,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link :to="item.href">
+        <v-list-item v-for="item in items" :key="item.title" link :to="{name: item.href}" exact>
           <v-list-item-icon>
             <v-icon color="primary">{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -87,8 +87,8 @@ export default {
     sidebarMenu: true,
     toggleMini: false,
     items: [
-      { title: 'Home', href: '/home', icon: 'mdi-home-outline' },
-      { title: 'Relatórios', href: '/reports', icon: 'mdi-file-chart-outline' },
+      { title: 'Home', href: 'Home', icon: 'mdi-home-outline' },
+      { title: 'Relatórios', href: 'Reports', icon: 'mdi-file-chart-outline' },
     ],
   }),
   methods: {
