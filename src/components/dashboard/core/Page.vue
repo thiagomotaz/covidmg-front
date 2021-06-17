@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div>
+    <div class="pa-2">
       <v-row>
         <v-col cols="12">
           <Breadcrumb/>

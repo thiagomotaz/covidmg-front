@@ -6,7 +6,7 @@ export default [
   },
   {
     path: '/dashboard',
-    component: () => import(/* webpackChunkName: "home" */ '../components/dashboard/DashboardLayout.vue'),
+    component: () => import(/* webpackChunkName: "dashboard" */ '../components/dashboard/DashboardLayout.vue'),
     meta: {
       requiresAuth: true,
       breadCrumb: 'Dashboard',
@@ -37,6 +37,15 @@ export default [
         meta: {
           requiresAuth: true,
           breadCrumb: 'Meu perfil',
+        },
+      },
+      {
+        path: 'qea',
+        name: 'Qea',
+        component: () => import(/* webpackChunkName: "qea" */ '../views/Qea.vue'),
+        meta: {
+          requiresAuth: true,
+          breadCrumb: 'FAQ',
         },
       },
       {

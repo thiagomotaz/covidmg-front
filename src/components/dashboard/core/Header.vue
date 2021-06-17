@@ -2,7 +2,7 @@
   <div>
     <v-app-bar app color="grey darken-4" dark>
       <v-app-bar-nav-icon @click.stop="sidebarMenu = !sidebarMenu"></v-app-bar-nav-icon>
-      <v-toolbar-title>Dashboard</v-toolbar-title>
+      <v-toolbar-title>Painel Covid MG</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon @click="toggleTheme">{{
         $vuetify.theme.dark ? "mdi-brightness-5" : "mdi-brightness-2"
@@ -14,10 +14,10 @@
         </template>
 
         <v-list>
-          <v-list-item link :to="{ name: 'Profile'}">
+          <v-list-item link :to="{ name: 'Profile'}" exact>
             <v-list-item-title>Meu perfil</v-list-item-title>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item link :to="{ name: 'Qea'}" exact>
             <v-list-item-title>FAQ</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
@@ -45,7 +45,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list-item class="px-2" @click="toggleMini = !toggleMini">
+      <v-list-item class="px-2" @click.stop="toggleMini = !toggleMini">
         <v-list-item-avatar>
           <v-icon>mdi-account-outline</v-icon>
         </v-list-item-avatar>

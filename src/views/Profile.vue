@@ -7,7 +7,7 @@
 import Page from '../components/dashboard/core/Page.vue';
 
 export default {
-  name: 'Reports',
+  name: 'Profile',
   components: {
     Page,
   },
