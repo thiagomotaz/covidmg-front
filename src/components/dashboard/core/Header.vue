@@ -75,8 +75,13 @@
 export default {
   name: 'Header',
   computed: {
-    mini() {
-      return this.$vuetify.breakpoint.smAndDown || this.toggleMini;
+    mini: {
+      get() {
+        return this.$vuetify.breakpoint.smAndDown || this.toggleMini;
+      },
+      set(value) {
+        this.toggleMini = value;
+      },
     },
   },
   created() {
