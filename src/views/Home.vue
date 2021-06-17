@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <Page title="Home">
     <v-row>
       <v-col lg="4" cols="sm" class="pb-2">
         <v-card>
@@ -155,12 +155,17 @@
         </v-card>
       </v-col>
     </v-row>
-  </div>
+  </Page>
 </template>
 
 <script>
+import Page from '../components/dashboard/core/Page.vue';
+
 export default {
   name: 'Home',
+  components: {
+    Page,
+  },
   data: () => ({
     sparklineData: [
       423,

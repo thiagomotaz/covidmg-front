@@ -50,7 +50,7 @@ export default {
     handleLogin() {
       const { login, password } = this;
       this.$store.dispatch('login', { login, password })
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.push('/home'))
         .catch((err) => console.log(err));
     },
   },

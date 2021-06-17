@@ -55,7 +55,7 @@ export default {
   name: 'Header',
   computed: {
     mini() {
-      return (this.$vuetify.breakpoint.smAndDown) || this.toggleMini;
+      return this.$vuetify.breakpoint.smAndDown || this.toggleMini;
     },
   },
   created() {
@@ -66,7 +66,7 @@ export default {
     sidebarMenu: true,
     toggleMini: false,
     items: [
-      { title: 'Home', href: '/', icon: 'mdi-home-outline' },
+      { title: 'Home', href: '/home', icon: 'mdi-home-outline' },
       { title: 'Relatórios', href: '/reports', icon: 'mdi-file-chart-outline' },
     ],
   }),
@@ -76,6 +76,13 @@ export default {
         this.$router.push('/login');
       });
     },
+    toggleTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
   },
 };
 </script>
+
+<style lang="sass">
+  $list-padding: 100px
+</style>>
