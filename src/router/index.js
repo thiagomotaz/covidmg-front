@@ -11,14 +11,22 @@ const router = new VueRouter({
   routes: paths,
 });
 
-// Protect routes that require auth
 router.beforeEach((to, from, next) => {
+  // A Logged-in user can't go to login page again
+  if (to.name === 'Login' && localStorage.getItem('token')) {
+    router.push({
+      name: 'Home',
+    });
+  }
+
+  // Protect routes that require auth
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // Verify if users is logged
     if (store.getters.isLoggedIn) {
       next();
       return;
     }
-    next('/login');
+    next({ name: 'Login' });
   } else {
     next();
   }

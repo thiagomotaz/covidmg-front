@@ -1,9 +1,11 @@
 <template>
   <div>
-    <v-app-bar app color="grey darken-4" dark>
+    <v-app-bar app
+      ><!--color="grey darken-4" dark-->
       <v-app-bar-nav-icon @click.stop="sidebarMenu = !sidebarMenu"></v-app-bar-nav-icon>
       <v-toolbar-title>Painel Covid MG</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <search></search>
+
       <v-icon @click="toggleTheme">{{
         $vuetify.theme.dark ? "mdi-brightness-5" : "mdi-brightness-2"
       }}</v-icon>
@@ -14,10 +16,10 @@
         </template>
 
         <v-list>
-          <v-list-item link :to="{ name: 'Profile'}" exact>
+          <v-list-item link :to="{ name: 'Profile' }" exact>
             <v-list-item-title>Meu perfil</v-list-item-title>
           </v-list-item>
-          <v-list-item link :to="{ name: 'Qea'}" exact>
+          <v-list-item link :to="{ name: 'Qea' }" exact>
             <v-list-item-title>FAQ</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
@@ -28,13 +30,13 @@
       </v-menu>
     </v-app-bar>
     <v-navigation-drawer
-      v-model="sidebarMenu"
       app
+      v-model="sidebarMenu"
       floating
       :permanent="sidebarMenu"
       :mini-variant.sync="mini"
-      color="grey darken-4"
     >
+      <!---->
       <v-list dense>
         <v-list-item>
           <v-list-item-action>
@@ -58,7 +60,8 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link :to="{name: item.href}" exact>
+        <v-list-item v-for="item in items" :key="item.title" link :to="{ name: item.href }"
+        v-show="checkPermission(item.permissions)" exact>
           <v-list-item-icon>
             <v-icon color="primary">{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -72,8 +75,13 @@
 </template>
 
 <script>
+import Search from './Search.vue';
+
 export default {
   name: 'Header',
+  components: {
+    Search,
+  },
   computed: {
     mini: {
       get() {
@@ -86,15 +94,22 @@ export default {
   },
   created() {
     this.name = JSON.parse(this.$store.getters.user).name;
+    this.fetchPermisions();
   },
   data: () => ({
     name: null,
     sidebarMenu: true,
     toggleMini: false,
+    permissions: [],
     items: [
-      { title: 'Home', href: 'Home', icon: 'mdi-home-outline' },
-      { title: 'Relatórios', href: 'Reports', icon: 'mdi-file-chart-outline' },
+      {
+        title: 'Home', href: 'Home', icon: 'mdi-home-outline', permissions: [],
+      },
+      {
+        title: 'Relatórios', href: 'Reports', icon: 'mdi-file-chart-outline', permissions: ['permissao1'],
+      },
     ],
+    select: null,
   }),
   methods: {
     logout() {
@@ -104,6 +119,18 @@ export default {
     },
     toggleTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
+    checkPermission(requiredPermissions) {
+      if (!requiredPermissions.length) {
+        return true;
+      }
+      return (this.permissions.every((i) => requiredPermissions.includes(i)));
+    },
+    fetchPermisions() {
+      this.$http.get('permissions').then((response) => {
+        this.permissions = response.data;
+      });
+      return null;
     },
   },
 };

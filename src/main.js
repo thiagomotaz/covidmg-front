@@ -17,6 +17,23 @@ if (token) {
   Vue.prototype.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
+// Check permissions in components
+Vue.directive('permissions', {
+  bind(el, binding) {
+    const requiredPermissions = binding.expression.replace(/'/g, '').split(',');
+    if (!requiredPermissions.length) { return; }
+
+    axios.get('permissions').then((actualPermissions) => {
+      console.log(actualPermissions.data);
+      if (!actualPermissions.data.every((i) => requiredPermissions.includes(i))) {
+        // vnode.elm.style.display = 'none';
+        // eslint-disable-next-line no-param-reassign
+        el.innerText = 'Você não tem permissão para acessar esta página.';
+      }
+    });
+  },
+});
+
 sync(store, router);
 
 new Vue({
