@@ -59,9 +59,15 @@
         </v-btn>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link :to="{ name: item.href }"
-        v-show="checkPermission(item.permissions)" exact>
+      <v-list v-if="permissions">
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          :to="{ name: item.href }"
+          v-show="checkPermission(item.permissions)"
+          exact
+        >
           <v-list-item-icon>
             <v-icon color="primary">{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -100,13 +106,25 @@ export default {
     name: null,
     sidebarMenu: true,
     toggleMini: false,
-    permissions: [],
+    permissions: null,
     items: [
       {
-        title: 'Home', href: 'Home', icon: 'mdi-home-outline', permissions: [],
+        title: 'Home',
+        href: 'Home',
+        icon: 'mdi-home-outline',
+        permissions: [],
       },
       {
-        title: 'Relatórios', href: 'Reports', icon: 'mdi-file-chart-outline', permissions: ['permissao1'],
+        title: 'Relatórios',
+        href: 'Reports',
+        icon: 'mdi-file-chart-outline',
+        permissions: ['permissao1'],
+      },
+      {
+        title: 'Usuários',
+        href: 'Users',
+        icon: 'mdi-account-group',
+        permissions: ['permissao1'],
       },
     ],
     select: null,
@@ -121,16 +139,24 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
     checkPermission(requiredPermissions) {
-      if (!requiredPermissions.length) {
-        return true;
+      if (this.permissions) {
+        // If there is no permission needed
+        if (!requiredPermissions.length) {
+          return true;
+        }
+        // If permission needed is owned or is admin
+        return (
+          this.permissions.permissions.every((i) => requiredPermissions.includes(i))
+          || this.permissions.is_admin
+        );
       }
-      return (this.permissions.every((i) => requiredPermissions.includes(i)));
+      return false;
     },
     fetchPermisions() {
       this.$http.get('permissions').then((response) => {
         this.permissions = response.data;
       });
-      return null;
+      return [];
     },
   },
 };

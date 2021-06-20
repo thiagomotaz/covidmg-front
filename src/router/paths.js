@@ -31,6 +31,15 @@ export default [
         },
       },
       {
+        path: 'users',
+        name: 'Users',
+        component: () => import(/* webpackChunkName: "reports" */ '../views/Users.vue'),
+        meta: {
+          requiresAuth: true,
+          breadCrumb: 'Usuários',
+        },
+      },
+      {
         path: 'profile',
         name: 'Profile',
         component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),

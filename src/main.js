@@ -24,8 +24,8 @@ Vue.directive('permissions', {
     if (!requiredPermissions.length) { return; }
 
     axios.get('permissions').then((actualPermissions) => {
-      console.log(actualPermissions.data);
-      if (!actualPermissions.data.every((i) => requiredPermissions.includes(i))) {
+      if (actualPermissions.data.is_admin === false
+        && !actualPermissions.data.permissions.every((i) => requiredPermissions.includes(i))) {
         // vnode.elm.style.display = 'none';
         // eslint-disable-next-line no-param-reassign
         el.innerText = 'Você não tem permissão para acessar esta página.';
