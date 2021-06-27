@@ -118,13 +118,13 @@ export default {
         title: 'Relatórios',
         href: 'Reports',
         icon: 'mdi-file-chart-outline',
-        permissions: ['permissao1'],
+        permissions: ['inserter'],
       },
       {
         title: 'Usuários',
         href: 'Users',
         icon: 'mdi-account-group',
-        permissions: ['permissao1'],
+        permissions: ['admin'],
       },
     ],
     select: null,
@@ -135,28 +135,30 @@ export default {
         this.$router.push('/login');
       });
     },
+
     toggleTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
+
     checkPermission(requiredPermissions) {
       if (this.permissions) {
         // If there is no permission needed
         if (!requiredPermissions.length) {
           return true;
         }
-        // If permission needed is owned or is admin
+        // If permission(s) needed is owned or is admin
         return (
-          this.permissions.permissions.every((i) => requiredPermissions.includes(i))
+          requiredPermissions.every((i) => this.permissions.permissions.includes(i))
           || this.permissions.is_admin
         );
       }
       return false;
     },
+
     fetchPermisions() {
       this.$http.get('permissions').then((response) => {
         this.permissions = response.data;
       });
-      return [];
     },
   },
 };

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import _differenceBy from 'lodash/differenceBy';
+import _difference from 'lodash/difference';
 
 export default {
   name: 'Permissions',
@@ -40,7 +40,7 @@ export default {
     },
     selection(to) {
       // Filter new one selecteds permissions for v-model
-      this.$emit('newPermissions', _differenceBy(to, this.actualPermissions.map((item) => item.name)));
+      this.$emit('diffPermissions', this.symmetricDifference(to, this.actualPermissions.map((item) => item.name)));
     },
   },
   methods: {
@@ -49,6 +49,10 @@ export default {
         this.items = response.data.map((item) => item.name);
       });
     },
+    symmetricDifference(a1, a2) {
+      return _difference(a1, a2).concat(_difference(a2, a1));
+    },
   },
+
 };
 </script>

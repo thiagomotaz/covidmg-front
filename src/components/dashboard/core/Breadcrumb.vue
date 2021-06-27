@@ -10,7 +10,6 @@ export default {
      */
     breadCrumbs() {
       const pathArray = this.$route.path.split('/');
-      console.log(pathArray);
       pathArray.shift();
       const breadCrumbs = [];
       // needed to handle the intermediary entries for nested vue routes
@@ -36,7 +35,6 @@ export default {
           breadcrumb = '';
         }
       }
-      console.log(breadCrumbs);
       return breadCrumbs;
     },
   },
