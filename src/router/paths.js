@@ -58,12 +58,21 @@ export default [
         },
       },
       {
-        path: 'secure',
-        name: 'Secure',
-        component: () => import(/* webpackChunkName: "secure" */ '../components/Secure.vue'),
+        path: 'non-autorized',
+        name: 'NotAutorized',
+        component: () => import(/* webpackChunkName: "qea" */ '../views/PageNotAuthorized.vue'),
         meta: {
           requiresAuth: true,
-          breadCrumb: 'Seguro',
+          breadCrumb: 'Não autorizado',
+        },
+      },
+      {
+        path: 'test',
+        name: 'test',
+        component: () => import(/* webpackChunkName: "secure" */ '../views/test.vue'),
+        meta: {
+          requiresAuth: true,
+          breadCrumb: 'test',
         },
       },
     ],
