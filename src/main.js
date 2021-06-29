@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import './plugins/vee-validate';
 import './plugins/axios';
 import './directives/permissions';
+import './base-components';
 
 Vue.config.productionTip = false;
 

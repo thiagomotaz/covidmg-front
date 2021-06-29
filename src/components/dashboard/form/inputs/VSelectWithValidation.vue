@@ -1,5 +1,5 @@
 <template>
-  <ValidationProvider :name="$attrs.label" :rules="rules" v-slot="{ errors, valid }">
+  <ValidationProvider :name="$attrs.label" immediate :rules="rules" v-slot="{ errors, valid }">
     <v-select
       v-model="innerValue"
       :error-messages="errors"
@@ -14,6 +14,7 @@
 import { ValidationProvider } from 'vee-validate';
 
 export default {
+  name: 'VSelectWithValidation',
   components: {
     ValidationProvider,
   },

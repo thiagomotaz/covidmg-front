@@ -1,5 +1,11 @@
 <template>
-  <ValidationProvider :name="$attrs.label" :rules="rules" v-slot="{ errors, valid }">
+  <ValidationProvider
+    :name="$attrs.label"
+    :rules="rules"
+    v-slot="{ errors, valid }"
+    :vid="vid"
+    immediate
+  >
     <v-text-field
       v-model="innerValue"
       :error-messages="errors"
@@ -14,6 +20,7 @@
 import { ValidationProvider } from 'vee-validate';
 
 export default {
+  name: 'VTextFieldWithValidation',
   components: {
     ValidationProvider,
   },
@@ -25,6 +32,10 @@ export default {
     // must be included in props
     value: {
       type: null,
+    },
+    vid: {
+      type: String,
+      required: false,
     },
   },
   data: () => ({

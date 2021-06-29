@@ -1,4 +1,6 @@
-import { required, email, max } from 'vee-validate/dist/rules';
+import {
+  required, email, max, confirmed,
+} from 'vee-validate/dist/rules';
 import { extend } from 'vee-validate';
 
 extend('required', {
@@ -14,4 +16,9 @@ extend('max', {
 extend('email', {
   ...email,
   message: 'Este campo deve ser um email válido.',
+});
+
+extend('confirmed', {
+  ...confirmed,
+  message: 'Senhas nao correspondem',
 });
