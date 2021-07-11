@@ -4,7 +4,7 @@
     :rules="rules"
     v-slot="{ errors, valid }"
     :vid="vid"
-    immediate
+    :immediate="editedIndex > - 1 ?  true : false"
   >
     <v-text-field
       v-model="innerValue"
@@ -35,6 +35,10 @@ export default {
     },
     vid: {
       type: String,
+      required: false,
+    },
+    editedIndex: {
+      type: Number,
       required: false,
     },
   },
