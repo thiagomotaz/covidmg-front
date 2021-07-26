@@ -3,6 +3,25 @@ export default [
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    meta: {
+      requiresAuth: false,
+    },
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: () => import(/* webpackChunkName: "resetPassword" */ '../views/ResetPassword.vue'),
+    meta: {
+      requiresAuth: false,
+    },
+  },
+  {
+    path: '/reset-password-form/:token',
+    name: 'ResetPasswordForm',
+    component: () => import(/* webpackChunkName: "resetPasswordForm" */ '../views/ResetPasswordForm.vue'),
+    meta: {
+      requiresAuth: false,
+    },
   },
   {
     path: '/dashboard',

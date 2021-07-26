@@ -8,6 +8,7 @@ import './plugins/vee-validate';
 import './plugins/axios';
 import './directives/permissions';
 import './base-components';
+import './plugins/notification';
 
 Vue.config.productionTip = false;
 

@@ -5,7 +5,7 @@
         <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
-              <v-toolbar-title>Login</v-toolbar-title>
+              <v-toolbar-title>Recuperar senha</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-form>
@@ -17,29 +17,19 @@
                   prepend-icon="mdi-account"
                   type="text"
                 />
-
-                <VTextFieldWithValidation
-                  rules="required"
-                  v-model="password"
-                  id="password"
-                  label="Senha"
-                  name="password"
-                  prepend-icon="mdi-lock"
-                  type="password"
-                />
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-btn class="text-caption grey--text ml-3" :to="{ name: 'ResetPassword' }" plain
-                >Esqueceu a senha?</v-btn
+              <v-btn class="text-caption grey--text ml-3" :to="{ name: 'Login' }" plain
+                >Login</v-btn
               >
               <v-spacer></v-spacer>
               <v-btn
                 color="primary"
-                @click="handleSubmit(handleLogin)"
+                @click="handleSubmit(handleResetPassword)"
                 :disabled="invalid || !validated"
                 :loading="loading > 0"
-                >Login</v-btn
+                >Recuperar</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -53,29 +43,31 @@
 import { ValidationObserver } from 'vee-validate';
 
 export default {
-  name: 'Login',
+  name: 'ResetPassword',
   components: {
     ValidationObserver,
   },
   data() {
     return {
       login: '',
-      password: '',
       loading: 0,
     };
   },
   methods: {
-    handleLogin() {
-      const { login, password } = this;
+    handleResetPassword() {
       this.loading += 1;
-      this.$store
-        .dispatch('login', { login, password })
+
+      this.$http
+        .post('reset-password', { email: this.login })
         .then(() => {
-          this.$router.push({ name: 'Home' });
-          this.$notify({ type: 'success', text: 'Login realizado com sucesso.' });
+          this.$notify({
+            type: 'success',
+            text: 'Senha recuperada com sucesso. Verifique seu e-mail.',
+          });
         })
-        .catch(() => {
-          this.$notify({ type: 'error', text: 'Erro ao realizar login.' });
+        .catch((err) => {
+          console.log(err);
+          this.$notify({ type: 'error', text: 'Erro ao recuperar senha.' });
         })
         .then(() => {
           this.loading -= 1;
